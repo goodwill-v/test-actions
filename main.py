@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from fastapi import FastAPI
 
-app = FastAPI(title="Test Backend", description="Простой тестовый бэкенд с временем сервера")
+app = FastAPI(title="Test Backend", description="Простой тестовый бэкенд с временем сервера. ПЛАНИРУЕТСЯ ТЕСТИРОВАНИЕ С ДОБАВЛЕНИЕМ ФУНКЦИЙ")
 
 
 @app.get("/")
