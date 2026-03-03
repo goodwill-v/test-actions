@@ -20,6 +20,26 @@ def get_server_time():
     }
 
 
+@app.get("/date")
+def get_server_date():
+    """Возвращает текущую дату сервера в UTC."""
+    now = datetime.now(timezone.utc)
+    return {
+        "date_iso": now.date().isoformat(),
+        "year": now.year,
+        "month": now.month,
+        "day": now.day,
+        "weekday": now.strftime("%A"),
+    }
+
+
+@app.get("/date/iso")
+def get_server_date_iso():
+    """Возвращает только дату в формате ISO (YYYY-MM-DD)."""
+    now = datetime.now(timezone.utc)
+    return {"date": now.date().isoformat()}
+
+
 @app.get("/health")
 def health():
     """Проверка состояния сервиса."""
