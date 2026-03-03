@@ -45,6 +45,26 @@ docker run -p 8000:8000 test-actions
 - **/ui** — стартовая страница приложения с кнопкой **MOON** в верхней панели.
 - **/moon** — страница «Луна»: текущая фаза (UTC+5) и ссылки на API новолуния и полнолуния.
 
+## GitHub Actions (деплой)
+
+Workflow `.github/workflows/deploy.yml` при пуше в `main` (или по кнопке):
+
+1. **build-and-push** — сборка Docker-образа и пуш в GitHub Container Registry (`ghcr.io/<owner>/test-actions:latest`).
+2. **deploy** — подключение по SSH к серверу, `docker login` в GHCR, `docker pull` и запуск контейнера `test-actions` на порту 8000.
+
+### Секреты репозитория (Settings → Secrets and variables → Actions)
+
+| Секрет | Описание |
+|--------|----------|
+| `SSH_HOST` | Адрес сервера (IP или домен) |
+| `SSH_USER` | Пользователь SSH |
+| `SSH_PRIVATE_KEY` | Приватный SSH-ключ (содержимое файла, без пароля) |
+| `SSH_PORT` | Порт SSH (например `22`), опционально |
+| `GHCR_USERNAME` | Логин GitHub (для `docker login ghcr.io`) |
+| `GHCR_TOKEN` | Personal Access Token с правом `read:packages` (для доступа к образу с сервера) |
+
+На сервере должны быть установлены Docker и настроенный доступ по SSH по ключу.
+
 ## Описание изменений
 
 - **Время и дата:** эндпоинты `/time`, `/date`, `/date/iso` для времени и даты сервера в UTC.
